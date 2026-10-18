@@ -1,0 +1,50 @@
+name: Deploy frontend to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - name: Validate deployment feed configuration
+        run: test -n "$VITE_DATA_URL"
+        env:
+          VITE_DATA_URL: ${{ vars.VITE_DATA_URL || 'https://pub-7e168d45011c4f138c3898e64145bbcd.r2.dev/data.jsonl.gz' }}
+      - run: pnpm build
+        env:
+          VITE_DATA_URL: ${{ vars.VITE_DATA_URL || 'https://pub-7e168d45011c4f138c3898e64145bbcd.r2.dev/data.jsonl.gz' }}
+          VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
