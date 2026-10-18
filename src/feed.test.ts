@@ -6,7 +6,7 @@ import { decompressGzip, fetchLatestSnapshot, hasForecast, isSnapshot, latestSna
 import { currentShareWithPartials, formatPercent, formatPp, formatSignedPercent, formatVotes, partiesFor, totalWithPartials } from "./format";
 import type { ElectionConfig, Snapshot } from "./types";
 
-const fixturesPath = fileURLToPath(new URL("../../Backend/testdata", import.meta.url));
+const fixturesPath = process.env.ELECTION_FIXTURES_PATH || fileURLToPath(new URL("../../Backend/testdata", import.meta.url));
 const config: ElectionConfig = { electionName: "GR2026", electionType: "municipal", currentLabel: "GR2026", previousLabel: "GR2022", partyNames: { GLPVDA: "GL-PvdA" } };
 afterEach(() => vi.unstubAllGlobals());
 

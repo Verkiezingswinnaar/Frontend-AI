@@ -19,6 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: Verkiezingswinnaar/Backend
+          ref: main
+          path: Backend
       - uses: pnpm/action-setup@v4
         with:
           version: 11.25.0
@@ -28,6 +33,8 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
+        env:
+          ELECTION_FIXTURES_PATH: Backend/testdata
       - name: Validate deployment feed configuration
         run: test -n "$VITE_DATA_URL"
         env:
