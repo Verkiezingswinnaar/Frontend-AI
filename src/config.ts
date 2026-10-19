@@ -53,7 +53,7 @@ export async function fetchElectionSetup(signal: AbortSignal): Promise<ElectionS
     SP: "SP",
     CU: "CU",
     SGP: "SGP",
-    FVD: "Forum",
+    FVD: "FvD",
     JA21: "JA21",
     BBB: "BBB",
     DENK: "DENK",
