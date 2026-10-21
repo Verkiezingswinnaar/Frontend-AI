@@ -2,7 +2,7 @@ import type { ActiveElections, ElectionConfig, ElectionResults } from "./types";
 import { resultMetricForElection } from "./format";
 
 export const electionDataBaseUrl = import.meta.env.VITE_ELECTION_DATA_BASE_URL || "/election-assets/";
-export const pollIntervalMs = Number(import.meta.env.VITE_POLL_INTERVAL_MS || 3000);
+export const pollIntervalMs = Number(import.meta.env.VITE_POLL_INTERVAL_MS || 30000);
 export const staleAfterMs = Number(import.meta.env.VITE_STALE_AFTER_MS || 45000);
 
 export type ElectionSetup = { active: ActiveElections; election: ElectionConfig; current: ElectionResults; previous: ElectionResults; feedUrl: string };
