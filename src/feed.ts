@@ -11,7 +11,7 @@ function isPartySnapshot(value: unknown): boolean {
   if (value === null || typeof value !== "object" || Array.isArray(value)) return false;
   const fields = value as Record<string, unknown>;
   const known = ["relative_vote_change", "votes_percentage", "votes_prediction", "votes_this_election",
-    "votes_last_election", "votes_last_election_corrected", "votes_this_election_with_partials",
+    "votes_last_election", "municipalities", "seats_prediction", "seats_last_election", "votes_last_election_corrected", "votes_this_election_with_partials",
     "votes_last_election_with_partials"];
   return known.every((key) => fields[key] === undefined || finite(fields[key]));
 }

@@ -35,13 +35,13 @@ jobs:
       - run: pnpm test
         env:
           ELECTION_FIXTURES_PATH: Backend/testdata
-      - name: Validate deployment feed configuration
-        run: test -n "$VITE_DATA_URL"
+      - name: Validate election data base URL
+        run: test -n "$VITE_ELECTION_DATA_BASE_URL"
         env:
-          VITE_DATA_URL: ${{ vars.VITE_DATA_URL || 'https://pub-7e168d45011c4f138c3898e64145bbcd.r2.dev/data.jsonl.gz' }}
+          VITE_ELECTION_DATA_BASE_URL: ${{ vars.VITE_ELECTION_DATA_BASE_URL || 'https://pub-7e168d45011c4f138c3898e64145bbcd.r2.dev/' }}
       - run: pnpm build
         env:
-          VITE_DATA_URL: ${{ vars.VITE_DATA_URL || 'https://pub-7e168d45011c4f138c3898e64145bbcd.r2.dev/data.jsonl.gz' }}
+          VITE_ELECTION_DATA_BASE_URL: ${{ vars.VITE_ELECTION_DATA_BASE_URL || 'https://pub-7e168d45011c4f138c3898e64145bbcd.r2.dev/' }}
           VITE_BASE_PATH: ${{ vars.VITE_BASE_PATH || '/' }}
       - uses: actions/upload-pages-artifact@v3
         with:
